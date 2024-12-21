@@ -1,0 +1,125 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 100vh;
+  width: 100%;
+  padding: 3rem;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  margin-right: 1rem;
+}
+
+.main-comment {
+  margin: 2rem 0;
+  display: flex;
+}
+
+.main-comment input {
+  padding: 0.5rem;
+  margin-right: 1rem;
+}
+
+.button-group {
+  display: flex;
+}
+
+.comment-item {
+  margin-left: 4rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-top: 0.5rem;
+  border-left: 2px solid lightgray;
+}
+
+.user-name {
+  font-size: 1.3rem;
+}
+
+.user-img {
+  border-radius: 50%;
+  height: 2.5rem;
+  position: absolute;
+  left: -1.25rem;
+  top: -0.5rem;
+}
+
+.comment-content {
+  padding: 0 0 2rem 2rem;
+}
+.comment-edit {
+  padding: 0.4rem;
+  margin: 0.8rem 0;
+}
+.comment-text {
+  color: gray;
+  margin: 1.2rem 0;
+  font-size: 1.1rem;
+}
+
+.reply-container{
+  display: flex;
+}
+
+.reply-input {
+  padding: 0.5rem;
+  margin: 1rem;
+}
+
+.arrow {
+  height: 0.9rem;
+  padding: auto;
+}
+
+@media screen and (max-width: 500px) {
+  .app{
+    padding: 2rem;
+  }
+  .main-comment{
+    flex-direction: column;
+    width: 100%;
+  }
+  .main-comment input{
+    margin-right: 0;
+  }
+  .main-comment button{
+    margin: 1rem;
+  }
+  .user-name{
+    font-size: 1rem;
+  }
+  .comment-item{
+    margin-left: 2rem;
+  }
+  .button-group{
+    width: fit-content;
+    display: grid;
+    grid-template-columns: auto auto auto; 
+    grid-template-rows: auto auto;
+    gap: 0.5rem;
+  }
+  .button-group button{
+    margin: 0;
+  }
+  .reply-container{
+    flex-direction: column;
+  }
+  .reply-btns{
+    margin-left: 1rem;
+  }
+}
