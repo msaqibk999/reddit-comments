@@ -3,11 +3,17 @@ import { useState } from "react";
 export const useComments = () => {
   const [comments, setComments] = useState([]);
 
+  const updateTimer = () => {
+    setComments([...comments]);
+  }
+
   const addComment = (text, parentId = null) => {
     const newComment = {
       id: Date.now(),
       text,
       parentId,
+      timestamp: Date.now(),
+      isEdited: false,
       likes: 0,
       dislikes: 0,
       replies: [],
@@ -59,7 +65,7 @@ export const useComments = () => {
   const editComment = (comments, id, updatedText) => {
     return comments.map((comment) => {
       if (comment.id === id) {
-        return { ...comment, text: updatedText };
+        return { ...comment, text: updatedText, timestamp: Date.now(), isEdited: true };
       } else if (comment.replies && comment.replies.length) {
         return {
           ...comment,
@@ -97,6 +103,7 @@ export const useComments = () => {
 
   return {
     comments,
+    updateTimer,
     addComment,
     deleteComment,
     updateComment,

@@ -1,10 +1,11 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import CommentItem from "./CommentItem";
 import { useComments } from "../customHooks/useComments";
 
 const CommentList = () => {
   const {
     comments,
+    updateTimer,
     addComment,
     deleteComment,
     updateComment,
@@ -12,8 +13,17 @@ const CommentList = () => {
     dislikeComment,
   } = useComments();
 
-  const commentRef = useRef();
+  useEffect(() => {
+    const timer = setInterval(() => {
+      // Trigger re-render to update timeSince
+      updateTimer();
+    }, 60000); // Every minute
 
+    return () => clearInterval(timer); // Cleanup on unmount
+  }, [updateTimer]);
+
+  const commentRef = useRef();
+  
   const handleAddComment = () => {
     const commentText = commentRef.current.value;
     if (commentText.trim()) {

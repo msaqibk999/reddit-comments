@@ -1,6 +1,10 @@
 import React, { useState, useRef } from "react";
 import Up from "../media/up.svg";
 import Down from "../media/down.svg";
+import Edit from "../media/edit.svg";
+import Delete from "../media/delete.svg";
+import Reply from "../media/reply.svg";
+import { timeSince } from "../helpers/timeSinceCalculator";
 
 const CommentItem = React.memo(
   ({
@@ -13,6 +17,7 @@ const CommentItem = React.memo(
   }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [isReplying, setIsReplying] = useState(false);
+    const [showReplies, setShowReplies] = useState(false);
     const replyRef = useRef();
     const editRef = useRef();
 
@@ -45,7 +50,11 @@ const CommentItem = React.memo(
           className="user-img"
         />
         <div className="comment-content">
-          <div className="user-name">User</div>
+          <div className="comment-header">
+            <div className="user-name">User</div>
+            <div>{timeSince(comment.timestamp)}</div>
+            {comment.isEdited && <div>(Edited)</div>}
+          </div>
           {isEditing ? (
             <input
               className="comment-edit"
@@ -58,11 +67,11 @@ const CommentItem = React.memo(
           )}
           <div className="button-group">
             <button onClick={() => likeComment(comment.id)}>
-              <img className="arrow" src={Up} alt="" />{" "}
+              <img className="icon" src={Up} alt="" />{" "}
               {comment.likes > 0 ? comment.likes : ""}
             </button>
             <button onClick={() => dislikeComment(comment.id)}>
-              <img className="arrow" src={Down} alt="" />{" "}
+              <img className="icon" src={Down} alt="" />{" "}
               {comment.dislikes > 0 ? comment.dislikes : ""}
             </button>
             {isEditing ? (
@@ -71,11 +80,32 @@ const CommentItem = React.memo(
                 <button onClick={handleCancelEdit}>Cancel</button>
               </>
             ) : (
-              <button onClick={() => setIsEditing(true)}>Edit</button>
+              <button onClick={() => setIsEditing(true)}>
+                <img className="icon" src={Edit} alt="" />
+              </button>
             )}
-            <button onClick={() => deleteComment(comment.id)}>Delete</button>
+            <button onClick={() => deleteComment(comment.id)}>
+              <img className="icon" src={Delete} alt="" />
+            </button>
             {!isReplying && (
-              <button onClick={() => setIsReplying(true)}>Reply</button>
+              <button
+                onClick={() => {
+                  setIsReplying(true);
+                  setShowReplies(true);
+                }}
+              >
+                <img className="icon" src={Reply} alt="" />
+              </button>
+            )}
+            {comment.replies.length > 0 && (
+              <button
+                onClick={() => {
+                  setShowReplies(!showReplies);
+                }}
+              >
+                {showReplies ? "Hide" : `Show(${comment.replies.length})`}{" "}
+                Replies
+              </button>
             )}
           </div>
           {isReplying && (
@@ -93,18 +123,20 @@ const CommentItem = React.memo(
             </div>
           )}
         </div>
-
-        {comment.replies.map((child) => (
-          <CommentItem
-            key={child.id}
-            comment={child}
-            addComment={addComment}
-            deleteComment={deleteComment}
-            updateComment={updateComment}
-            likeComment={likeComment}
-            dislikeComment={dislikeComment}
-          />
-        ))}
+        <div className="comment-replies">
+          {showReplies &&
+            comment.replies.map((child) => (
+              <CommentItem
+                key={child.id}
+                comment={child}
+                addComment={addComment}
+                deleteComment={deleteComment}
+                updateComment={updateComment}
+                likeComment={likeComment}
+                dislikeComment={dislikeComment}
+              />
+            ))}
+        </div>
       </div>
     );
   }
