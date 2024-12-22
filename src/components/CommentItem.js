@@ -14,19 +14,29 @@ const CommentItem = React.memo(
     updateComment,
     likeComment,
     dislikeComment,
+    depth = 0,
   }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [isReplying, setIsReplying] = useState(false);
     const [showReplies, setShowReplies] = useState(false);
     const replyRef = useRef();
     const editRef = useRef();
+    const maxDepth = window.innerWidth < 768 ? 4 : 8;
 
     const handleReply = () => {
       const replyText = replyRef.current.value;
       if (replyText.trim()) {
-        addComment(replyText, comment.id);
-        replyRef.current.value = "";
-        setIsReplying(false);
+        if (depth < maxDepth) {
+          addComment(replyText, comment.id);
+          replyRef.current.value = "";
+          setIsReplying(false);
+        }else{
+          setIsReplying(false);
+          const formattedTime = new Date(comment.timestamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+          const text = `@${comment.user}[${formattedTime}]: "${comment.text}", ${replyText}`
+          addComment(text, null)
+          alert("Max Depth Reached, started a new thread")
+        }
       }
     };
 
@@ -136,6 +146,7 @@ const CommentItem = React.memo(
                 updateComment={updateComment}
                 likeComment={likeComment}
                 dislikeComment={dislikeComment}
+                depth={depth + 1}
               />
             ))}
         </div>

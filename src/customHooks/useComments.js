@@ -10,6 +10,7 @@ export const useComments = () => {
   const addComment = (text, parentId = null) => {
     const newComment = {
       id: Date.now(),
+      user: "User",
       text,
       parentId,
       timestamp: Date.now(),
