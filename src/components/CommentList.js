@@ -1,17 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import CommentItem from "./CommentItem";
-import { useComments } from "../customHooks/useComments";
+import { useCommentsContext } from "../contexts/commentsContext";
 
 const CommentList = () => {
-  const {
-    comments,
-    updateTimer,
-    addComment,
-    deleteComment,
-    updateComment,
-    likeComment,
-    dislikeComment,
-  } = useComments();
+  const { comments, updateTimer, addComment } = useCommentsContext();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -40,15 +32,7 @@ const CommentList = () => {
       </section>
       <section className="comments">
         {comments.map((comment) => (
-          <CommentItem
-            key={comment.id}
-            comment={comment}
-            addComment={addComment}
-            deleteComment={deleteComment}
-            updateComment={updateComment}
-            likeComment={likeComment}
-            dislikeComment={dislikeComment}
-          />
+          <CommentItem key={comment.id} comment={comment} />
         ))}
       </section>
     </>
