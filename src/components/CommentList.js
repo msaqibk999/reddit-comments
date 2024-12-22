@@ -23,7 +23,7 @@ const CommentList = () => {
   }, [updateTimer]);
 
   const commentRef = useRef();
-  
+
   const handleAddComment = () => {
     const commentText = commentRef.current.value;
     if (commentText.trim()) {
@@ -34,22 +34,23 @@ const CommentList = () => {
 
   return (
     <>
-      <div className="main-comment">
+      <section className="main-comment">
         <input type="text" placeholder="Add a comment" ref={commentRef} />
         <button onClick={handleAddComment}>Add Comment</button>
-      </div>
-
-      {comments.map((comment) => (
-        <CommentItem
-          key={comment.id}
-          comment={comment}
-          addComment={addComment}
-          deleteComment={deleteComment}
-          updateComment={updateComment}
-          likeComment={likeComment}
-          dislikeComment={dislikeComment}
-        />
-      ))}
+      </section>
+      <section className="comments">
+        {comments.map((comment) => (
+          <CommentItem
+            key={comment.id}
+            comment={comment}
+            addComment={addComment}
+            deleteComment={deleteComment}
+            updateComment={updateComment}
+            likeComment={likeComment}
+            dislikeComment={dislikeComment}
+          />
+        ))}
+      </section>
     </>
   );
 };

@@ -56,60 +56,62 @@ const CommentItem = React.memo(
             {comment.isEdited && <div>(Edited)</div>}
           </div>
           {isEditing ? (
-            <input
-              className="comment-edit"
-              type="text"
-              defaultValue={comment.text}
-              ref={editRef}
-            />
+            <div className="edit-reply-container">
+              <input
+                className="edit-input"
+                type="text"
+                defaultValue={comment.text}
+                ref={editRef}
+              />
+              <div className="reply-btns">
+                <button onClick={handleUpdate}>Update</button>
+                <button onClick={handleCancelEdit}>Cancel</button>
+              </div>
+            </div>
           ) : (
             <div className="comment-text">{comment.text}</div>
           )}
-          <div className="button-group">
-            <button onClick={() => likeComment(comment.id)}>
-              <img className="icon" src={Up} alt="" />{" "}
-              {comment.likes > 0 ? comment.likes : ""}
-            </button>
-            <button onClick={() => dislikeComment(comment.id)}>
-              <img className="icon" src={Down} alt="" />{" "}
-              {comment.dislikes > 0 ? comment.dislikes : ""}
-            </button>
-            {isEditing ? (
-              <>
-                <button onClick={handleUpdate}>Update</button>
-                <button onClick={handleCancelEdit}>Cancel</button>
-              </>
-            ) : (
+          {!isEditing && (
+            <div className="button-group">
+              <button onClick={() => likeComment(comment.id)}>
+                <img className="icon" src={Up} alt="" />{" "}
+                {comment.likes > 0 ? comment.likes : ""}
+              </button>
+              <button onClick={() => dislikeComment(comment.id)}>
+                <img className="icon" src={Down} alt="" />{" "}
+                {comment.dislikes > 0 ? comment.dislikes : ""}
+              </button>
               <button onClick={() => setIsEditing(true)}>
                 <img className="icon" src={Edit} alt="" />
               </button>
-            )}
-            <button onClick={() => deleteComment(comment.id)}>
-              <img className="icon" src={Delete} alt="" />
-            </button>
-            {!isReplying && (
-              <button
-                onClick={() => {
-                  setIsReplying(true);
-                  setShowReplies(true);
-                }}
-              >
-                <img className="icon" src={Reply} alt="" />
+              <button onClick={() => deleteComment(comment.id)}>
+                <img className="icon" src={Delete} alt="" />
               </button>
-            )}
-            {comment.replies.length > 0 && (
-              <button
-                onClick={() => {
-                  setShowReplies(!showReplies);
-                }}
-              >
-                {showReplies ? "Hide" : `Show(${comment.replies.length})`}{" "}
-                Replies
-              </button>
-            )}
-          </div>
+              {!isReplying && (
+                <button
+                  onClick={() => {
+                    setIsReplying(true);
+                    setShowReplies(true);
+                  }}
+                >
+                  <img className="icon" src={Reply} alt="" />
+                </button>
+              )}
+              {comment.replies.length > 0 && (
+                <button
+                  onClick={() => {
+                    setShowReplies(!showReplies);
+                  }}
+                >
+                  {showReplies ? "Hide" : `Show(${comment.replies.length})`}{" "}
+                  Replies
+                </button>
+              )}
+            </div>
+          )}
+
           {isReplying && (
-            <div className="reply-container">
+            <div className="edit-reply-container">
               <input
                 type="text"
                 placeholder="Write a reply..."
@@ -117,7 +119,7 @@ const CommentItem = React.memo(
                 className="reply-input"
               />
               <div className="reply-btns">
-                <button onClick={handleReply}>Add Reply</button>
+                <button onClick={handleReply}>Add</button>
                 <button onClick={() => setIsReplying(false)}>Cancel</button>
               </div>
             </div>
