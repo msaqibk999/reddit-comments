@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/reddit-comments/static/css/main.05f89418.css",
+    "main.js": "/reddit-comments/static/js/main.41904158.js",
+    "index.html": "/reddit-comments/index.html",
+    "static/media/edit.svg": "/reddit-comments/static/media/edit.d51a722eedb17247a07d9b811fc53f27.svg",
+    "static/media/delete.svg": "/reddit-comments/static/media/delete.017c86c26f19a16adb558fb6f59bdbed.svg",
+    "static/media/reply.svg": "/reddit-comments/static/media/reply.bbe9e3f19c2965d58ad744293a272afa.svg",
+    "static/media/up.svg": "/reddit-comments/static/media/up.b47d322d2a29b4ecff0d3ae03769010b.svg",
+    "static/media/down.svg": "/reddit-comments/static/media/down.b89a25be1975abf0a5a8886b35b5498f.svg",
+    "main.05f89418.css.map": "/reddit-comments/static/css/main.05f89418.css.map",
+    "main.41904158.js.map": "/reddit-comments/static/js/main.41904158.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.05f89418.css",
+    "static/js/main.41904158.js"
+  ]
+}
